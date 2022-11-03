@@ -1,0 +1,44 @@
+#instalacion
+su -
+zypper install vsftpd
+systemctl start vsftpd
+systemctl enable vsftpd
+cd /srv
+ls
+cd ftp
+groupadd ftpg 
+#creacion de usuario
+useradd -g ftpg -d /srv/ftp ftpuser(cualquier nombre que quiera en mi caso ftpuser)
+#crear contraseña
+passwd ftpuser
+#Dar permisos
+chmod 770 /srv/ftp
+chown ftpuser:ftpg /srv/ftp
+#configurar
+vim /etc/vsftpd.conf
+#habilitar escritura
+write_enable=YES
+#habilitacion local
+local_enable=YES
+#deshabilitar anonimo
+anonymous_enable=NO
+#para salir de la configuracion
+:x -
+sys
+#reiniciar
+systemctl restart vsftpd
+#Desde simbolo de sistema para crear e ingresar 
+#tomar en cuenta en que carpeta esta ingresando con el ftp
+ftp 192.168.X.Y
+#ingresar nombre de usuario y contraseña
+ls (para verificar si se encuentra dentro de la maquina)
+#para bajar un archivo (puede ser cuaquier archivo en mi caso apr-1.7.0)
+get apr-1.7.0.tar.gz
+#para bajar varios archivos
+mget *.tar.gz
+#para poder escribir
+mkdir ftp
+cd ftp
+mput *.docx
+#para verificar quienes pueden modifica el documento
+ls -l
