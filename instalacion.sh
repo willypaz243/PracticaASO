@@ -46,4 +46,4 @@ zypper install -y mariadb
 systemctl start mysql
 systemctl enable mysql
 zypper install -y php7-mysql
-mysql -u root -p '' aso_practice < mysqlInit.sql
+mysql -u root < mysqlInit.sql
