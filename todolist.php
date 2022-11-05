@@ -130,7 +130,7 @@
               </td>
               <td class="column">
                 <form action="delete_task.php?id=<?php echo $row['id'] ?>">
-                  <button type="button" class="delete-btn">Delete</button>
+                  <button type="submit" class="delete-btn">Delete</button>
                 </form>
               </td>
             </tr>
