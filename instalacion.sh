@@ -1,5 +1,5 @@
 #Install vsftpd
-zypper install vsftpd
+zypper install -y vsftpd
 systemctl start vsftpd
 systemctl enable vsftpd
 groupadd ftpg
@@ -24,29 +24,26 @@ firewall-cmd --add-port=30000-30100/tcp --permanent
 firewall-cmd --reload
 
 # Instalar apache2
-zypper install apache2
+zypper install -y apache2
 systemctl start apache2
 systemctl enable apache2
 
 # Instalar php7
-zypper install php7 apache2-mod_php7
+zypper install -y php7 apache2-mod_php7
 # enable php modules 
 a2enmod php7
 # copy php code to apache htdocs
 cp ./index.php /srv/www/htdocs/
+# open firewall ports to apache2
+firewall-cmd --permanent --add-service=http
+firewall-cmd --permanent --add-service=https
+firewall-cmd --reload
 # enable apache2 service
 systemctl restart apache2
 
 # install mysql
-zypper install mariadb
+zypper install -y mariadb
 systemctl start mysql
 systemctl enable mysql
-zypper install php7-mysql
+zypper install -y php7-mysql
 mysql -u root -p '' aso_practice < mysqlInit.sql
-
-
-
-# install a c/Client
-
-# c/client dependencies
-# zypper install php7-curl
