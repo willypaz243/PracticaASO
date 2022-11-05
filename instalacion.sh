@@ -29,7 +29,7 @@ systemctl start apache2
 systemctl enable apache2
 
 # Instalar php7
-zypper install -y php7 apache2-mod_php7
+zypper install -y php7 php7-cli apache2-mod_php7
 
 # enable php modules 
 a2enmod php7
