@@ -120,7 +120,7 @@
                 <?php echo $row['title'] ?>
               </td>
               <td class="column">
-                <?php echo substr($row['description'], 0, 10) + ' ...' ?>
+                <?php echo $row['description'] ?>
               </td>
               <td class="column">
                 <?php echo $row['created_at'] ?>
