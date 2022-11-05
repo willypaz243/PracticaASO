@@ -17,6 +17,11 @@ chown ftpuser:ftpg /srv/ftp
 cp ./vsftpd.conf /etc/ftp/
 systemctl restart vsftpd
 
+# add port to ftp
+firewall-cmd --add-port=21/tcp --permanent
+firewall-cmd --add-port=30000-30100/tcp --permanent
+firewall-cmd --reload
+
 # Instalar apache2
 zypper install apache2
 systemctl start apache2
