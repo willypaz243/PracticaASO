@@ -129,7 +129,8 @@
                 <?php echo $row['updated_at'] ?>
               </td>
               <td class="column">
-                <form action="delete_task.php?id=<?php echo $row['id'] ?>">
+                <form action="delete_task.php">
+                  <input type="hidden" value="<?php echo $row['id']; ?>">
                   <button type="submit" class="delete-btn">Delete</button>
                 </form>
               </td>
