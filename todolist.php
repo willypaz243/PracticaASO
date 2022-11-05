@@ -120,7 +120,7 @@
                 <?php echo $row['title'] ?>
               </td>
               <td class="column">
-                <?php echo $row['description'] ?>
+                <?php echo substr($row['description'], 0, 10) + ' ...' ?>
               </td>
               <td class="column">
                 <?php echo $row['created_at'] ?>
@@ -129,8 +129,9 @@
                 <?php echo $row['updated_at'] ?>
               </td>
               <td class="column">
-                <form action="delete_task.php?id=<?php echo $row['id'] ?>"></form>
-                <button type="button" class="delete-btn">Delete</button>
+                <form action="delete_task.php?id=<?php echo $row['id'] ?>">
+                  <button type="button" class="delete-btn">Delete</button>
+                </form>
               </td>
             </tr>
             <?php
