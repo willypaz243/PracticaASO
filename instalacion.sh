@@ -14,7 +14,8 @@ fi
 chmod 770 /srv/ftp
 chown ftpuser:ftpg /srv/ftp
 # ftp config
-cp ./vsftpd.conf /etc/ftp/
+mv /etc/vsftpd.conf /etc/vsftpd.conf.bak
+cp ./vsftpd.conf /etc/
 systemctl restart vsftpd
 
 # add port to ftp
