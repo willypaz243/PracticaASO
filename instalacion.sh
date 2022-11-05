@@ -61,3 +61,5 @@ cp ./conn.php /srv/www/htdocs/conn.php
 cp ./add_task.php /srv/www/htdocs/add_task.php
 cp ./delete_task.php /srv/www/htdocs/delete_task.php
 cp ./todolist.php /srv/www/htdocs/todolist.php
+
+systemctl restart apache2
