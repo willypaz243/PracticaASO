@@ -11,7 +11,7 @@ if ! id "ftpuser" &>/dev/null; then
     passwd ftpuser
 fi
 # give permissions
-chmod 770 /srv/ftp
+chmod 774 /srv/ftp
 chown ftpuser:ftpg /srv/ftp
 # ftp config
 mv /etc/vsftpd.conf /etc/vsftpd.conf.bak
@@ -50,6 +50,7 @@ zypper install -y mariadb
 systemctl start mysql
 systemctl enable mysql
 zypper install -y php7-mysql
+# init database
 mysql -u root < mysqlInit.sql
 
 # install db manager

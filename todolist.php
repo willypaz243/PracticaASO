@@ -151,8 +151,8 @@
     </h4>
     <ul>
       <li>Willy Samuel Paz Colque</li>
-      <li>Compañero 1</li>
-      <li>Compañero 2</li>
+      <li>Raul Fernandez Argote</li>
+      <li>Beatriz Fuentes Rios</li>
     </ul>
   </footer>
 </body>
