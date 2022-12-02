@@ -1,6 +1,21 @@
 #! /usr/bin/python3
-
 import cgi
 
-form = cgi.FieldStorage()
-print(form)
+if __name__ == '__main__':
+    print('Content-Type: text/html\n\n')
+
+    form = cgi.FieldStorage()
+
+    username = form.getvalue('username')
+    password = form.getvalue('password')
+    domain_name = form.getvalue('domain_name')
+    database_name = form.getvalue('database_name')
+
+    print('<ul>')
+
+    print('<li>', username, '</li>')
+    print('<li>', password, '</li>')
+    print('<li>', domain_name, '</li>')
+    print('<li>', database_name, '</li>')
+
+    print('</ul>')
