@@ -1,15 +1,49 @@
 #! /usr/bin/python3
+import os
+import pwd
 import cgi
+import db_conn
 
-if __name__ == '__main__':
-    print('Content-Type: text/html\n\n')
 
+def exists_username(username) -> bool:
+    try:
+        pwd.getpwnam(username)
+        return True
+    except:
+        return False
+    
+def redirect_conflict(status: int, msg: str) -> None:
+    print(f'Status: {status}')
+    print(f'Location: http://admin-panel.com?done=false&msg={msg}')
+    
+def create_user(username:str, password:str):
+    os.system(f'useradd -p "{password}" {username}')
+    # create the linux user with home folder
+    # create {username} folder into user home directory
+    pass
+
+def configure_domain(username:str, domain:str):
+    # create vhost conf in apache2
+    pass
+
+def create_db(username:str, password:str, db_name:str):
+    # create db using db_conn
+    pass
+
+def main():
     form = cgi.FieldStorage()
 
     username = form.getvalue('username')
     password = form.getvalue('password')
     domain_name = form.getvalue('domain_name')
     database_name = form.getvalue('database_name')
+    
+    if db_conn.exists_username(username) or exists_username(username):
+        redirect_conflict(409, 'username no disponible')
+    if db_conn.exists_domain(domain_name):
+        redirect_conflict(409, 'dominio no disponible')
+    if db_conn.exists_db_name(database_name):
+        redirect_conflict(409, 'nombre de DB no disponible')
 
     print('<ul>')
 
@@ -19,3 +53,10 @@ if __name__ == '__main__':
     print('<li>', database_name, '</li>')
 
     print('</ul>')
+
+
+
+if __name__ == '__main__':
+    print('Content-Type: text/html\n\n')
+
+    main()

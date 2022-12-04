@@ -1,19 +1,38 @@
 #! /usr/bin/python3
 
 import cgi
-import pwd
-from hashlib import sha256
+import spwd
+import crypt
+import string
 
 
-def verify_user(username: str) -> bool:
-    try:
-        pwd.getpwnam(username)
-        return True
-    except KeyError:
+def verify_user(username: str, password: str) -> bool:
+    username = username.translate(str.maketrans('', '', string.punctuation))
+    password = password.translate(str.maketrans('', '', string.punctuation))
+    if (username == '' or password == ''):
         return False
-
-
-def verify_password(password: str) -> bool:
-    with open('credential', 'r') as cred:
-        return cred.read() == sha256(password.encode('utf-8')).hexdigest()
+    try:
+        encrypted_pass = spwd.getpwnam(username).sp_pwdp
+        return crypt.crypt(password, encrypted_pass) == encrypted_pass
+    except:
+        return False
     
+def main():
+
+    form = cgi.FieldStorage()
+    username = form.getvalue('username')
+    password = form.getvalue('password')
+    login = verify_user(username, password)
+    
+    if not login:
+        return
+    
+    print('Status: 302')
+    print('<?php session_start(); ?>')
+    print(f'<?php $_SESSION["username"] = "{username}" ?>')
+    print(f'Location: http://admin-panel.com?login={login}&username={username}')
+    
+
+if __name__ == '__main__':
+    print('Content-Type: text/html\n\n')
+    main()

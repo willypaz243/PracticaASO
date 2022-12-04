@@ -19,7 +19,7 @@
         <h4>Login</h4>
       </div>
       <div class="card-body">
-        <form>
+        <form method="post" action="cgi-bin/signin">
           <div class="mb-3">
             <label for="usernameInput" class="form-label">Username</label>
             <input type="text" class="form-control" id="usernameInput" aria-describedby="usernameHelp" name="username">

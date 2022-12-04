@@ -1,8 +1,11 @@
 <?php
 
-// if (!isset($_SESSION['login'])) {
-//   header("Location: /login.php");
-// }
+session_start();
+
+if (!isset($_SESSION['username'])) {
+  header("Location: /login.php");
+}
+$username = $_SESSION['username']
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +17,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <title>Admin panel</title>
+  <title>
+    <?php echo $username ?>
+  </title>
 </head>
 
 <body>
@@ -77,7 +82,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form id="website_form" action="create_site">
+            <form id="website_form" action="cgi-bin/create_site">
               <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
                 <input type="text" class="form-control" id="username" aria-describedby="username" name="username">
