@@ -2,6 +2,11 @@
 
 session_start();
 
+if (isset($_GET['exit']) && $_GET['exit'] == true) {
+  session_unset();
+  header("Location: /");
+}
+
 if (isset($_GET['username'])) {
   $_SESSION['username'] = $_GET['username'];
   header("Location: /");
@@ -42,7 +47,7 @@ $username = $_SESSION['username'];
               <a class="nav-link active" aria-current="page" href="#">Home</a>
             </li>
             <li class="nav-item">
-              <a class="btn btn-danger" href="#">Salir</a>
+              <a class="btn btn-danger" href="/?exit=true">Salir</a>
             </li>
           </ul>
         </div>
