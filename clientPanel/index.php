@@ -2,10 +2,15 @@
 
 session_start();
 
+if (isset($_GET['username'])) {
+  $_SESSION['username'] = $_GET['username'];
+  header("Location: /");
+}
+
 if (!isset($_SESSION['username'])) {
   header("Location: /login.php");
 }
-$username = $_SESSION['username']
+$username = $_SESSION['username'];
 ?>
 
 <!DOCTYPE html>
