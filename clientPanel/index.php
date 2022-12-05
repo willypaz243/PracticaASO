@@ -75,7 +75,7 @@ $username = $_SESSION['username'];
               <a href="http://<?php echo $row['domain'] ?>">
                 <?php echo $row['domain'] ?>
               </a>
-            </div>
+            </div class="d-flex mx-3">
             <div class="card-body">
               <h5 class="card-title">
                 <?php echo $row['domain'] ?>
