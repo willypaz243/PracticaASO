@@ -63,14 +63,14 @@ $username = $_SESSION['username'];
         <div class="ms-auto  py-5">
           <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#newPageModal">Nuevo</button>
         </div>
-        <div class="d-flex mx-3">
+        <div class="row">
 
           <?php
           require 'conn.php';
           $query = $conn->query("SELECT * FROM `sites` ORDER BY `id` ASC");
           while ($row = $query->fetch_array()) {
           ?>
-          <div class="card" style="width: 18rem;">
+          <div class="card mx-3" style="width: 18rem;">
             <div class="card-header">
               <a href="http://<?php echo $row['domain'] ?>">
                 <?php echo $row['domain'] ?>
