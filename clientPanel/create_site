@@ -42,8 +42,8 @@ def create_user(username:str, password:str):
         with open(f'/home/{username}/web/index.html', 'w') as template:
             template.write(site)
     except Exception as error:
-        print(error)
         response_error(403, 'No se pudo crear el usuario')
+        print(error)
         del_user(username)
         raise error
 
@@ -59,8 +59,8 @@ def create_db(username:str, password:str, db_name:str):
     try:
         db_conn.create_database(username, password, db_name)
     except Exception as error:
-        print(error)
         response_error(500, "Algo salio mal")
+        print(error)
         del_user(username)
         raise error
 
