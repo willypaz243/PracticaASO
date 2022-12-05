@@ -18,11 +18,11 @@ def get_connection():
 def create_database(username:str, password:str, db_name:str):
     conn = get_connection()
     cursor = conn.cursor()
-    query = "CREATE DATABASE IF NOT EXISTS %s DEFAULT CHARACTER SET 'utf8';"
-    cursor.execute(query, (db_name,))
-    query = "CREATE USER '%s'@localhost IDENTIFIED BY '%s';"
+    query = f"CREATE DATABASE IF NOT EXISTS {db_name} DEFAULT CHARACTER SET 'utf8';"
+    cursor.execute(query)
+    query = "CREATE USER %s@localhost IDENTIFIED BY %s;"
     cursor.execute(query, (username, password))
-    query = "GRANT ALL PRIVILEGES ON '%s'.* TO '%s'@localhost;"
+    query = "GRANT ALL PRIVILEGES ON %s.* TO %s@localhost;"
     cursor.execute(query, (db_name, username))
     cursor.execute('FLUSH PRIVILEGES;')
     conn.close()
