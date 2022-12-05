@@ -72,7 +72,7 @@ $username = $_SESSION['username'];
           ?>
           <div class="card" style="width: 18rem;">
             <div class="card-header">
-              <a href="<?php echo $row['domain'] ?>">
+              <a href="http://<?php echo $row['domain'] ?>">
                 <?php echo $row['domain'] ?>
               </a>
             </div>
@@ -86,7 +86,7 @@ $username = $_SESSION['username'];
               <p><strong>DB name: </strong>
                 <?php echo $row['name_db'] ?>
               </p>
-              <a href="<?php echo $row['domain'] ?>" class="card-link">view web</a>
+              <a href="http://<?php echo $row['domain'] ?>" class="card-link">view web</a>
               <a href="#" class="card-link">Config</a>
             </div>
           </div>

@@ -90,8 +90,15 @@ def main():
     db_conn.save_site(username, password, domain_name, database_name)
 
     print('Content-Type: text/html')
-    print(f'Status: 302')
-    print(f'Location: /\n\n')
+    print(f'Status: 302\n\n')
+    print('<html>')
+    print('<head>')
+    print(f'<meta http-equiv="refresh" content="3;url=/" />') 
+    print('</head>')
+    print('<body>')
+    print(f'<p>sitio web creado exitosamente. Redireccionando ...</p>')
+    print('</body>')
+    print('</html>')
 
 
 

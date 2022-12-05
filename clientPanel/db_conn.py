@@ -31,7 +31,7 @@ def save_site(username:str, password:str, domain:str, db_name:str):
     ecrypt_parr = crypt.crypt(password, 'secret')
     conn = get_connection()
     cursor = conn.cursor()
-    query = 'INSERT INTO sites(username, ecrypt_parr, domain, name_db) VALUES (%s, %s, %s, %s)'
+    query = 'INSERT INTO sites(username, ecrypt_parr, domain, name_db) VALUES (%s, %s, %s, %s);'
     cursor.execute(query, (username, ecrypt_parr, domain, db_name))
     conn.close()
 
@@ -42,7 +42,7 @@ def exists(**kwargs):
     if not value: return False
     conn = get_connection()
     cursor = conn.cursor()
-    query = f'SELECT {param} FROM sites WHERE username = %s'
+    query = f'SELECT {param} FROM sites WHERE username = %s;'
     
     cursor.execute(query, (value,))
     row = cursor.fetchone()
