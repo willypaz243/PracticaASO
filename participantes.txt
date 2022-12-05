@@ -1,0 +1,5 @@
+Nombre completo         | gmail                     | celular
+------------------------+---------------------------+----------
+Willy Samuel Paz Colque | 201612371@est.umss.edu    | 76465727
+Raul Fernandez Argote   | 201904939@est.umss.edu    | 68497906
+Beatriz Fuentes Rios    | 201902491@est.umss.edu    | 60384090
