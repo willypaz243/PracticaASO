@@ -23,7 +23,7 @@ def create_database(username:str, password:str, db_name:str):
     query = "CREATE USER %s@localhost IDENTIFIED BY %s;"
     cursor.execute(query, (username, password))
     query = f"GRANT ALL PRIVILEGES ON {db_name}.* TO %s@localhost;"
-    cursor.execute(query, (username))
+    cursor.execute(query, (username,))
     cursor.execute('FLUSH PRIVILEGES;')
     conn.close()
     
