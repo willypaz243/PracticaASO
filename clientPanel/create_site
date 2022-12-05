@@ -88,6 +88,8 @@ def main():
     create_db(username, password, database_name)
     
     db_conn.save_site(username, password, domain_name, database_name)
+    os.system('systemctl restart apache2')
+    
 
     print('Content-Type: text/html')
     print(f'Status: 302\n\n')
