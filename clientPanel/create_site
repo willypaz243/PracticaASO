@@ -14,7 +14,7 @@ def exists_username(username) -> bool:
     
 def response_error(status: int, msg: str) -> None:
     print('Content-Type: text/html')
-    print(f'Status: {status}\n')
+    print(f'Status: {status}\n\n')
     print('<html>')
     print('<head>')
     print(f'<meta http-equiv="refresh" content="3;url=/" />') 
@@ -52,8 +52,9 @@ def configure_domain(username:str, domain:str):
         conf = conf_file.read()
         conf = conf.replace('{username}', username)
         conf = conf.replace('{domain}', domain)
-    with open(f'/etc/apache2/vhosts.d/{username}.conf', 'w') as conf_file:
+    with open(f'{username}.conf', 'w') as conf_file:
         conf_file.write(conf)
+    os.system(f'mv {username}.conf /etc/apache2/vhosts.d/')
 
 def create_db(username:str, password:str, db_name:str):
     try:
@@ -90,7 +91,7 @@ def main():
 
     print('Content-Type: text/html')
     print(f'Status: 302')
-    print(f'Location: /')
+    print(f'Location: /\n\n')
 
 
 
