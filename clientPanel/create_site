@@ -16,6 +16,9 @@ def response_error(status: int, msg: str) -> None:
     print('Content-Type: text/html')
     print(f'Status: {status}\n')
     print('<html>')
+    print('<head>')
+    print(f'<meta http-equiv="refresh" content="3;url=/" />') 
+    print('</head>')
     print('<body>')
     print(f'<p>{msg}. Return <a href="/">home</a></p>')
     print('</body>')
@@ -65,10 +68,13 @@ def main():
 
     if db_conn.exists_username(username) or exists_username(username):
         response_error(409, 'username no disponible')
+        return
     if db_conn.exists_domain(domain_name):
         response_error(409, 'dominio no disponible')
+        return
     if db_conn.exists_db_name(database_name):
         response_error(409, 'nombre de DB no disponible')
+        return
         
     create_user(username, password)
     configure_domain(username, domain_name)
