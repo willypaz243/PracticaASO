@@ -15,7 +15,12 @@ def exists_username(username) -> bool:
 def response_error(status: int, msg: str) -> None:
     print('Content-Type: text/html')
     print(f'Status: {status}\n')
-    print(f'<p>{msg}</p>')
+    print('<html>')
+    print('<body>')
+    print(f'<p>{msg}. Return <a href="/">home</a></p>')
+    print('</body>')
+    print('</html>')
+    
     
 def create_user(username:str, password:str):
     try:
