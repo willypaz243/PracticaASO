@@ -18,7 +18,7 @@ def get_connection():
 def create_database(username:str, password:str, db_name:str):
     conn = get_connection()
     cursor = conn.cursor()
-    query = "CREATE DATABASE IF NOT EXISTS %s CHARACTER SET 'utf8';"
+    query = "CREATE DATABASE IF NOT EXISTS %s DEFAULT CHARACTER SET 'utf8';"
     cursor.execute(query, (db_name,))
     query = "CREATE USER '%s'@localhost IDENTIFIED BY '%s';"
     cursor.execute(query, (username, password))
