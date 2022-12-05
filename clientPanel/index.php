@@ -67,7 +67,7 @@ $username = $_SESSION['username'];
 
           <?php
           require 'conn.php';
-          $query = $conn->query("SELECT * FROM `web_sites` ORDER BY `ID` ASC");
+          $query = $conn->query("SELECT * FROM `web_sites` ORDER BY `id` ASC");
           while ($row = $query->fetch_array()) {
           ?>
           <div class="card" style="width: 18rem;">
@@ -91,6 +91,7 @@ $username = $_SESSION['username'];
             </div>
           </div>
           <?php } ?>
+
         </div>
       </div>
     </section>
