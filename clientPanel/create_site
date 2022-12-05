@@ -24,6 +24,13 @@ def response_error(status: int, msg: str) -> None:
     print('</body>')
     print('</html>')
     
+def del_user(username:str):
+    os.system(f'userdel -r {username}')
+    if os.path.exists(f'/home/{username}'):
+        os.system(f'rm -r /home/{username}')
+    vhost_path = f'rm /etc/apache2/vhosts.d/{username}.conf'
+    if os.path.exists(vhost_path):
+        os.system(f'rm {vhost_path}')
     
 def create_user(username:str, password:str):
     try:
@@ -35,7 +42,9 @@ def create_user(username:str, password:str):
         with open(f'/home/{username}/web/index.html', 'w') as template:
             template.write(site)
     except Exception as error:
+        print(error)
         response_error(403, 'No se pudo crear el usuario')
+        del_user(username)
         raise error
 
 def configure_domain(username:str, domain:str):
@@ -50,12 +59,9 @@ def create_db(username:str, password:str, db_name:str):
     try:
         db_conn.create_database(username, password, db_name)
     except Exception as error:
+        print(error)
         response_error(500, "Algo salio mal")
-        os.system(f'userdel -r {username}')
-        os.system(f'rm -r /home/{username}')
-        vhost_path = f'rm /etc/apache2/vhosts.d/{username}.conf'
-        if os.path.exists(vhost_path):
-            os.system(vhost_path)
+        del_user(username)
         raise error
 
 def main():
