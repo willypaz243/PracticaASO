@@ -1,20 +1,42 @@
+import crypt
 from mysql import connector
 
 
 def get_connection():
-    connection = connector.MySQLConnection(
-        user='root',
-        password='password',
-        host='127.0.0.1',
-        database='web_sites'
-    )
+    try:
+        connection = connector.MySQLConnection(
+            user='root',
+            password='password',
+            host='127.0.0.1',
+            database='web_sites'
+        )
+    except Exception as error:
+        print(error)
+        raise error
     return connection
 
-def create_database():
+def create_database(username:str, password:str, db_name:str):
     conn = get_connection()
+    cursor = conn.cursor()
+    query = "CREATE DATABASE IF NOT EXISTS %s CHARACTER SET 'utf8';"
+    cursor.execute(query, (db_name,))
+    query = "CREATE USER '%s'@localhost IDENTIFIED BY '%s';"
+    cursor.execute(query, (username, password))
+    query = "GRANT ALL PRIVILEGES ON '%s'.* TO '%s'@localhost;"
+    cursor.execute(query, (db_name, username))
+    cursor.execute('FLUSH PRIVILEGES;')
+    conn.close()
+    
+def save_site(username:str, password:str, domain:str, db_name:str):
+    ecrypt_parr = crypt.crypt(password, 'secret')
+    conn = get_connection()
+    cursor = conn.cursor()
+    query = 'INSERT INTO (username, ecrypt_parr, domain, name_db) VALUES (%s, %s, %s, %s)'
+    cursor.execute(query, (username, ecrypt_parr, domain, db_name))
+    conn.close()
 
 def exists(**kwargs):
-    param = kwargs.keys()[0]
+    param = list(kwargs.keys()).pop()
     if not param: return False
     value = kwargs.get(param)
     if not value: return False

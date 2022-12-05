@@ -12,23 +12,43 @@ def exists_username(username) -> bool:
     except:
         return False
     
-def redirect_conflict(status: int, msg: str) -> None:
-    print(f'Status: {status}')
-    print(f'Location: http://admin-panel.com?done=false&msg={msg}')
+def response_error(status: int, msg: str) -> None:
+    print('Content-Type: text/html')
+    print(f'Status: {status}\n')
+    print(f'<p>{msg}</p>')
     
 def create_user(username:str, password:str):
-    os.system(f'useradd -p "{password}" {username}')
-    # create the linux user with home folder
-    # create {username} folder into user home directory
-    pass
+    try:
+        os.system(f'useradd -p "{password}" -m -d /home/{username} {username}')
+        os.mkdir(f'/home/{username}/web')
+        with open('index_example.html', 'r') as template:
+            site = template.read()
+            site = site.replace('{username}', username)
+        with open(f'/home/{username}/web/index.html', 'w') as template:
+            template.write(site)
+    except Exception as error:
+        response_error(403, 'No se pudo crear el usuario')
+        raise error
 
 def configure_domain(username:str, domain:str):
-    # create vhost conf in apache2
-    pass
+    with open('vhost_template.conf', 'r') as conf_file:
+        conf = conf_file.read()
+        conf = conf.replace('{username}', username)
+        conf = conf.replace('{domain}', domain)
+    with open(f'/etc/apache2/vhosts.d/{username}.conf', 'w') as conf_file:
+        conf_file.write(conf)
 
 def create_db(username:str, password:str, db_name:str):
-    # create db using db_conn
-    pass
+    try:
+        db_conn.create_database(username, password, db_name)
+    except Exception as error:
+        response_error(500, "Algo salio mal")
+        os.system(f'userdel -r {username}')
+        os.system(f'rm -r /home/{username}')
+        vhost_path = f'rm /etc/apache2/vhosts.d/{username}.conf'
+        if os.path.exists(vhost_path):
+            os.system(vhost_path)
+        raise error
 
 def main():
     form = cgi.FieldStorage()
@@ -37,26 +57,25 @@ def main():
     password = form.getvalue('password')
     domain_name = form.getvalue('domain_name')
     database_name = form.getvalue('database_name')
-    
+
     if db_conn.exists_username(username) or exists_username(username):
-        redirect_conflict(409, 'username no disponible')
+        response_error(409, 'username no disponible')
     if db_conn.exists_domain(domain_name):
-        redirect_conflict(409, 'dominio no disponible')
+        response_error(409, 'dominio no disponible')
     if db_conn.exists_db_name(database_name):
-        redirect_conflict(409, 'nombre de DB no disponible')
+        response_error(409, 'nombre de DB no disponible')
+        
+    create_user(username, password)
+    configure_domain(username, domain_name)
+    create_db(username, password, database_name)
+    
+    db_conn.save_site(username, password, domain_name, database_name)
 
-    print('<ul>')
-
-    print('<li>', username, '</li>')
-    print('<li>', password, '</li>')
-    print('<li>', domain_name, '</li>')
-    print('<li>', database_name, '</li>')
-
-    print('</ul>')
+    print('Content-Type: text/html')
+    print(f'Status: 302')
+    print(f'Location: /')
 
 
 
 if __name__ == '__main__':
-    print('Content-Type: text/html\n\n')
-
     main()

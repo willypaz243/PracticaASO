@@ -64,20 +64,33 @@ $username = $_SESSION['username'];
           <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#newPageModal">Nuevo</button>
         </div>
         <div>
+
+          <?php
+          require 'conn.php';
+          $query = $conn->query("SELECT * FROM `web_sites` ORDER BY `ID` ASC");
+          while ($row = $query->fetch_array()) {
+          ?>
           <div class="card" style="width: 18rem;">
             <div class="card-header">
-              <a>example.com</a>
+              <a href="<?php echo $row['domain'] ?>">
+                <?php echo $row['domain'] ?>
+              </a>
             </div>
             <div class="card-body">
-              <h5 class="card-title">Site title</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Site subtitle</h6>
-              <p class="card-text">Una corta descripcion del sitio web puesto por el aministrador de este sitio en
-                especifico</p>
-              <p><strong>Admin: </strong> <a href="">admin@example.com</a></p>
-              <a href="#" class="card-link">view info</a>
+              <h5 class="card-title">
+                <?php echo $row['domain'] ?>
+              </h5>
+              <p><strong>Admin: </strong>
+                <?php echo $row['username'] ?>
+              </p>
+              <p><strong>DB name: </strong>
+                <?php echo $row['name_db'] ?>
+              </p>
+              <a href="<?php echo $row['domain'] ?>" class="card-link">view web</a>
               <a href="#" class="card-link">Config</a>
             </div>
           </div>
+          <?php } ?>
         </div>
       </div>
     </section>
