@@ -35,7 +35,7 @@ def del_user(username:str):
 def create_user(username:str, password:str):
     try:
         os.system(f'useradd -p "{password}" -m -d /home/{username} {username}')
-        os.mkdir(f'/home/{username}/web')
+        os.system(f'mkdir /home/{username}/web')
         with open('index_example.html', 'r') as template:
             site = template.read()
             site = site.replace('{username}', username)
