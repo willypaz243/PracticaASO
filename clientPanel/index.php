@@ -63,7 +63,7 @@ $username = $_SESSION['username'];
         <div class="ms-auto  py-5">
           <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#newPageModal">Nuevo</button>
         </div>
-        <div>
+        <div class="d-flex mx-3">
 
           <?php
           require 'conn.php';
@@ -75,7 +75,7 @@ $username = $_SESSION['username'];
               <a href="http://<?php echo $row['domain'] ?>">
                 <?php echo $row['domain'] ?>
               </a>
-            </div class="d-flex mx-3">
+            </div>
             <div class="card-body">
               <h5 class="card-title">
                 <?php echo $row['domain'] ?>
